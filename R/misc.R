@@ -4,7 +4,7 @@ invalid_to_na <- function(x, regex, locate, ignore = NULL) {
   x <- toupper(x) %>%
     str_replace_all(set_names("", str_c("[^A-Z0-9]", ignore, "]")))
   if (locate) {
-    x <- map_if(x, ~str_detect(.x, regex),
+    x <- map_if(x, ~is.na(.x) | str_detect(.x, regex),
                 ~str_extract(.x, regex)) %>%
       unlist()
   }

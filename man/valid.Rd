@@ -38,6 +38,6 @@ A logical vector that can be interpreted as follows:
 Functions for inferring if the input string is a valid Business ID, VAT
 Number, E-Invoicing address or an ID Number. Rules obtained from
 \url{http://tarkistusmerkit.teppovuori.fi/tarkmerk.htm}. Removes all
-characters that can not be present in a valid string, such commas, dots
+characters that can not occur in a valid string, such commas, dots
 and white space.
 }

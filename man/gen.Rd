@@ -20,7 +20,7 @@ gen_id(n = 1)
 \item{n}{The number of examples to be generated. Defaults to 1.}
 }
 \description{
-Rules for generating the IDs from
+Rules for generating the IDs obtained from
 \url{http://tarkistusmerkit.teppovuori.fi/tarkmerk.htm}
 \describe{
  \item{\code{gen_yt}}{generates a Business ID (y-tunnus).}

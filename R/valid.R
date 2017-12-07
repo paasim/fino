@@ -3,7 +3,7 @@
 #' Functions for inferring if the input string is a valid Business ID, VAT
 #' Number, E-Invoicing address or an ID Number. Rules obtained from
 #' \url{http://tarkistusmerkit.teppovuori.fi/tarkmerk.htm}. Removes all
-#' characters that can not be present in a valid string, such commas, dots
+#' characters that can not occur in a valid string, such commas, dots
 #' and white space.
 #'
 #'
@@ -58,7 +58,7 @@ valid_ovt <- function(x, locate = TRUE, require_checksum = TRUE) {
 #' @rdname valid
 valid_vat <- function(x, locate = TRUE, require_checksum = TRUE) {
 
-  if (!locate) stop("Only locate = FALSE implemented.")
+  if (!locate) stop("Only locate = TRUE implemented.")
 
   x <- invalid_to_na(x, regex_vat(), locate, "*+")
 

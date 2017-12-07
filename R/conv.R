@@ -1,7 +1,7 @@
 #' Convert between different ID numbers
 #'
 #' Currently allows conversion from E-invoicing address and VAT number to
-#' Business ID and from Business ID to VAT Number.
+#' Business ID and vice versa.
 #'
 #' @param x The input string(s).
 #' @param locate If \code{TRUE} (default) tries to locate the valid part of

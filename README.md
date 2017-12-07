@@ -1,8 +1,9 @@
 # fino
 
-An R package for generating, validating and converting between Finnish ID numbers. Currently supported 'types' include ID, Business ID, VAT Number and E-invoicing address.
+[![Build Status](https://travis-ci.org/paasim/fino.svg?branch=master)](https://travis-ci.org/paasim/fino)
+[![codecov](https://codecov.io/gh/paasim/fino/branch/master/graphs/badge.svg)](https://codecov.io/gh/paasim/fino)
 
-MVP, tests and documentation imcomplete.
+An R package for generating, validating and converting between Finnish ID numbers. Currently supported 'types' include ID, Business ID, VAT Number and E-invoicing address.
 
 Installation
 ------------
@@ -14,6 +15,8 @@ Usage example
 -------------
     
     library(fino)
-    all(valid_id(gen_id(13)))
+    # generate three syntactically valid Finnish Business IDs
+    ids <- gen_yt(3)
+    all(valid_yt(ids))
 
 

@@ -24,5 +24,5 @@ the string.}
 }
 \description{
 Currently allows conversion from E-invoicing address and VAT number to
-Business ID and from Business ID to VAT Number.
+Business ID and vice versa.
 }

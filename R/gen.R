@@ -1,6 +1,6 @@
 #' Generate valid examples of the strings
 #'
-#' Rules for generating the IDs from
+#' Rules for generating the IDs obtained from
 #' \url{http://tarkistusmerkit.teppovuori.fi/tarkmerk.htm}
 #' \describe{
 #'  \item{\code{gen_yt}}{generates a Business ID (y-tunnus).}
