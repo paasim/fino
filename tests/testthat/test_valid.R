@@ -6,6 +6,8 @@ test_that("valid_id works as expected", {
   invalid_ids <- c(substr(valid_ids, 1, 6), kinda_valid_id, "200211B2735", "13")
   expect_true(all(valid_id(valid_ids, locate = FALSE)))
   expect_false(any(valid_id(invalid_ids)))
+  expect_true(valid_id(kinda_valid_id, require_checksum = FALSE))
+  expect_true(valid_id("a110124-4332a", locate = TRUE))
 
 })
 
