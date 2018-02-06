@@ -1,7 +1,7 @@
 Package: fino
 Type: Package
 Title: An R package for working with Finnish ID numbers
-Version: 0.1.0
+Version: 0.1.1
 Author: Markus Paasiniemi [aut]
 Maintainer: Markus Paasiniemi <paasim@iki.fi>
 Description:

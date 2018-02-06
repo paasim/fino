@@ -64,7 +64,8 @@ valid_vat <- function(x, locate = TRUE, require_checksum = TRUE) {
 
   if (!require_checksum) return(!is.na(x))
 
-  yt_fi <- str_extract(x, str_c("^", vat_regexes$format[11], "$"))
+  vat_fi <- vat_regexes$format[vat_regexes$code == "FI"]
+  yt_fi <- str_extract(x, str_c("^", vat_fi, "$"))
   valid_fi <- vat_to_yt(yt_fi) %>% valid_yt(FALSE, TRUE)
   # the parenthesized part includes the checksum only finnish VAT numbers
   !is.na(x) & (is.na(yt_fi) | valid_fi)
