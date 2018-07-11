@@ -28,19 +28,18 @@ NULL
 #' @rdname valid
 valid_yt <- function(x, locate = TRUE, require_checksum = TRUE) {
 
-  x <- invalid_to_na(x, regex_yt, locate, "\\-")
+  x <- invalid_to_na(x, regex_yt, locate)
 
   if (!require_checksum) return(!is.na(x))
 
   check <- str_sub(x, 0, 7) %>%
     str_split("") %>%
-    map(yt_cs_map) %>%
-    map_if(~.x == 1L & !is.na(.x), ~NA) %>%
-    map_int(~(11L-.x) %% 11L)
+    map_int(yt_cs_map) %>%
+    (function(x) if_else(x == 1L, NA_integer_, (11L - x) %% 11L))
 
   # validate against the checksum
   res <- as.integer(str_sub(x, 9, 9)) == check
-  ifelse(is.na(res), FALSE, res)
+  if_else(is.na(res), FALSE, res)
 
 }
 #' @export
@@ -60,13 +59,14 @@ valid_vat <- function(x, locate = TRUE, require_checksum = TRUE) {
 
   if (!locate) stop("Only locate = TRUE implemented.")
 
-  x <- invalid_to_na(x, regex_vat(), locate, "*+")
+  # spaces are ignored in VAT-numbers
+  x <- str_remove_all(x, " ") %>% invalid_to_na(regex_vat(), locate)
 
   if (!require_checksum) return(!is.na(x))
 
   vat_fi <- vat_regexes$format[vat_regexes$code == "FI"]
   yt_fi <- str_extract(x, str_c("^", vat_fi, "$"))
-  valid_fi <- vat_to_yt(yt_fi) %>% valid_yt(FALSE, TRUE)
+  valid_fi <- vat_to_yt(yt_fi) %>% valid_yt(FALSE, require_checksum)
   # the parenthesized part includes the checksum only finnish VAT numbers
   !is.na(x) & (is.na(yt_fi) | valid_fi)
 }
@@ -75,9 +75,9 @@ valid_vat <- function(x, locate = TRUE, require_checksum = TRUE) {
 #' @rdname valid
 valid_id <- function(x, locate = TRUE, require_checksum = TRUE) {
 
-  x <- invalid_to_na(x, regex_id, locate, "\\-")
+  x <- invalid_to_na(x, regex_id, locate)
 
-  days <- str_c(str_map(c("+" = "18", "-" = "19", "A" = "20"), str_sub(x, 7,7)),
+  days <- str_c(c("+" = "18", "-" = "19", "A" = "20")[str_sub(x, 7,7)],
                 str_sub(x, 5, 6), str_sub(x, 3, 4), str_sub(x, 1, 2)) %>%
     ymd(quiet = TRUE)
   days[days <= "1850-01-01"] <- NA

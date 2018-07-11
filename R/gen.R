@@ -24,7 +24,7 @@ gen_yt <- function(n = 1) {
     mod <- map_int(digits, yt_cs_map)
   }
 
-  ifelse(mod == 0, mod, 11 - mod) %>%
+  if_else(mod == 0, mod, 11L - mod) %>%
     map2_chr(digits, ~c(.y, "-", .x) %>% str_c(collapse = ""))
 }
 
@@ -41,8 +41,7 @@ gen_ovt <- function(n = 1) {
   x <- gen_yt(n)
   suffix_len <- sample(0:5, n, TRUE)
   str_c("0037", str_sub(x, 1, 7), str_sub(x, 9, 9)) %>%
-    map2(suffix_len, ~str_c(.x, str_c(sample(0:9, .y, TRUE), collapse = ""))) %>%
-    unlist()
+    map2_chr(suffix_len, ~str_c(.x, str_c(sample(0:9, .y, TRUE), collapse = "")))
 }
 
 #' @export
@@ -62,8 +61,7 @@ gen_id <- function(n = 1) {
     as.integer() %>%
     id_cs_map()
 
-  s <- c("18" = "+", "19" = "-" , "20" = "A") %>%
-    str_map(str_sub(date_seq, 1, 2))
-  str_c(ppkkvv, s, nnn, t)
+  s <- c("18" = "+", "19" = "-" , "20" = "A")
+  str_c(ppkkvv, s[str_sub(date_seq, 1, 2)], nnn, t)
 }
 
