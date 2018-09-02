@@ -16,32 +16,29 @@ NULL
 #' @export
 #' @rdname gen
 gen_yt <- function(n = 1) {
-  digits <- map(1:n, ~sample(9, 7, TRUE))
+  digits <- rerun(n, sample(0:9, 7, TRUE))
 
-  mod <- map_int(digits, yt_cs_map)
-  while (any(mod == 1)) {
-    digits <- map_if(digits, mod == 1, ~sample(9, 7, TRUE))
-    mod <- map_int(digits, yt_cs_map)
+  cs <- yt_cs_map(digits)
+  while (any(is.na(cs))) {
+    digits <- map_if(digits, is.na(cs), ~sample(0:9, 7, TRUE))
+    cs <- yt_cs_map(digits)
   }
 
-  if_else(mod == 0, mod, 11L - mod) %>%
-    map2_chr(digits, ~c(.y, "-", .x) %>% str_c(collapse = ""))
+  map(digits, ~str_c(.x, collapse = "")) %>%
+    str_c("-", cs)
 }
 
 #' @export
 #' @rdname gen
-gen_vat <- function(n = 1) {
-  x <- gen_yt(n)
-  str_c("FI", str_sub(x, 1, 7), str_sub(x, 9, 9))
-}
+gen_vat <- function(n = 1) gen_yt(n) %>% yt_to_vat()
 
 #' @export
 #' @rdname gen
 gen_ovt <- function(n = 1) {
-  x <- gen_yt(n)
-  suffix_len <- sample(0:5, n, TRUE)
-  str_c("0037", str_sub(x, 1, 7), str_sub(x, 9, 9)) %>%
-    map2_chr(suffix_len, ~str_c(.x, str_c(sample(0:9, .y, TRUE), collapse = "")))
+  x <- gen_yt(n) %>% yt_to_ovt()
+  suffix <- sample(0:5, n, TRUE) %>%
+    map_chr(~str_c("", sample(0:9, .x, TRUE), collapse = ""))
+  str_c(x, suffix)
 }
 
 #' @export
@@ -58,10 +55,8 @@ gen_id <- function(n = 1) {
   nnn <- sample(2:500, n, TRUE) %>% p(3)
 
   t <- str_c(ppkkvv, nnn) %>%
-    as.integer() %>%
     id_cs_map()
 
   s <- c("18" = "+", "19" = "-" , "20" = "A")
   str_c(ppkkvv, s[str_sub(date_seq, 1, 2)], nnn, t)
 }
-

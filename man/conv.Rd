@@ -8,19 +8,16 @@
 \alias{yt_to_ovt}
 \title{Convert between different ID numbers}
 \usage{
-ovt_to_yt(x, locate = TRUE)
+ovt_to_yt(x)
 
-vat_to_yt(x, locate = TRUE)
+vat_to_yt(x)
 
-yt_to_vat(x, locate = TRUE)
+yt_to_vat(x)
 
-yt_to_ovt(x, locate = TRUE)
+yt_to_ovt(x)
 }
 \arguments{
 \item{x}{The input string(s).}
-
-\item{locate}{If \code{TRUE} (default) tries to locate the valid part of
-the string.}
 }
 \description{
 Currently allows conversion from E-invoicing address and VAT number to

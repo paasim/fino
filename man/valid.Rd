@@ -8,19 +8,16 @@
 \alias{valid_id}
 \title{Check if the string is a valid ID Number}
 \usage{
-valid_yt(x, locate = TRUE, require_checksum = TRUE)
+valid_yt(x, require_checksum = TRUE)
 
-valid_ovt(x, locate = TRUE, require_checksum = TRUE)
+valid_ovt(x, require_checksum = TRUE)
 
-valid_vat(x, locate = TRUE, require_checksum = TRUE)
+valid_vat(x, require_checksum = TRUE)
 
-valid_id(x, locate = TRUE, require_checksum = TRUE)
+valid_id(x, require_checksum = TRUE)
 }
 \arguments{
 \item{x}{The input string(s).}
-
-\item{locate}{If \code{TRUE} (default) tries to locate the valid part of
-the string.}
 
 \item{require_checksum}{If \code{TRUE} (default), require that the checksum
 digit matches in addition to the format of the string. Note, does not make

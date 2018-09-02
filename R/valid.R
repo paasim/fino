@@ -8,8 +8,6 @@
 #'
 #'
 #' @param x The input string(s).
-#' @param locate If \code{TRUE} (default) tries to locate the valid part of
-#'  the string.
 #' @param require_checksum If \code{TRUE} (default), require that the checksum
 #' digit matches in addition to the format of the string. Note, does not make
 #' sense when used to validate non-Finnish VAT-numbers.
@@ -26,66 +24,56 @@ NULL
 
 #' @export
 #' @rdname valid
-valid_yt <- function(x, locate = TRUE, require_checksum = TRUE) {
+valid_yt <- function(x, require_checksum = TRUE) {
 
-  x <- invalid_to_na(x, regex_yt, locate)
-
-  if (!require_checksum) return(!is.na(x))
-
-  check <- str_sub(x, 0, 7) %>%
-    str_split("") %>%
-    map_int(yt_cs_map) %>%
-    (function(x) if_else(x == 1L, NA_integer_, (11L - x) %% 11L))
-
-  # validate against the checksum
-  res <- as.integer(str_sub(x, 9, 9)) == check
-  if_else(is.na(res), FALSE, res)
-
-}
-#' @export
-#' @rdname valid
-valid_ovt <- function(x, locate = TRUE, require_checksum = TRUE) {
-
-  x <- invalid_to_na(x, regex_ovt, locate)
-
-  if (!require_checksum) return(!is.na(x))
-
-  ovt_to_yt(x) %>% valid_yt(FALSE, TRUE)
+  x <- str_extract(x, str_c("^", regex_yt, "$"))
+  if (require_checksum) {
+    valid_yt_cs(x) %>% coalesce(FALSE)
+  } else {
+    !is.na(x)
+  }
 }
 
 #' @export
 #' @rdname valid
-valid_vat <- function(x, locate = TRUE, require_checksum = TRUE) {
+valid_ovt <- function(x, require_checksum = TRUE) {
 
-  if (!locate) stop("Only locate = TRUE implemented.")
+  x <- str_extract(x, str_c("^", regex_ovt, "$"))
+  if (require_checksum) {
+    ovt_to_yt(x) %>% valid_yt_cs() %>% coalesce(FALSE)
+  } else {
+    !is.na(x)
+  }
+}
 
+#' @export
+#' @rdname valid
+valid_vat <- function(x, require_checksum = TRUE) {
   # spaces are ignored in VAT-numbers
-  x <- str_remove_all(x, " ") %>% invalid_to_na(regex_vat(), locate)
-
-  if (!require_checksum) return(!is.na(x))
-
-  vat_fi <- vat_regexes$format[vat_regexes$code == "FI"]
-  yt_fi <- str_extract(x, str_c("^", vat_fi, "$"))
-  valid_fi <- vat_to_yt(yt_fi) %>% valid_yt(FALSE, require_checksum)
-  # the parenthesized part includes the checksum only finnish VAT numbers
-  !is.na(x) & (is.na(yt_fi) | valid_fi)
+  x <- str_remove_all(x, " ") %>% str_extract(str_c("^", regex_vat_all(), "$"))
+  if (require_checksum) {
+    vat_fi <- str_extract(x, str_c("^", regex_vat_fi, "$"))
+    cs_fi <- vat_to_yt(vat_fi) %>%
+      valid_yt_cs()
+    !is.na(x) & (is.na(vat_fi) | cs_fi)
+  } else {
+    !is.na(x)
+  }
 }
 
 #' @export
 #' @rdname valid
-valid_id <- function(x, locate = TRUE, require_checksum = TRUE) {
-
-  x <- invalid_to_na(x, regex_id, locate)
+valid_id <- function(x, require_checksum = TRUE) {
+  x <- str_extract(x, str_c("^", regex_id, "$"))
 
   days <- str_c(c("+" = "18", "-" = "19", "A" = "20")[str_sub(x, 7,7)],
                 str_sub(x, 5, 6), str_sub(x, 3, 4), str_sub(x, 1, 2)) %>%
     ymd(quiet = TRUE)
-  days[days <= "1850-01-01"] <- NA
+  days[days < "1850-01-01"] <- NA_character_
 
   if (!require_checksum) return(!is.na(days))
 
   check <- str_c(str_sub(x, 1, 6), str_sub(x, 8, 10)) %>%
-    as.integer() %>%
     id_cs_map()
 
   !is.na(days) & !is.na(check) & (check == str_sub(x, 11, 11))
