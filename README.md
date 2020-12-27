@@ -1,6 +1,6 @@
 # fino
 
-[![Build Status](https://travis-ci.org/paasim/fino.svg?branch=master)](https://travis-ci.org/paasim/fino)
+[![R build status](https://github.com/paasim/fino/workflows/R-CMD-check/badge.svg)](https://github.com/paasim/fino/actions)
 [![codecov](https://codecov.io/gh/paasim/fino/branch/master/graphs/badge.svg)](https://codecov.io/gh/paasim/fino)
 
 An R package for generating, validating and converting between Finnish ID numbers. Currently supported 'types' include ID, Business ID, VAT Number and E-invoicing address.
