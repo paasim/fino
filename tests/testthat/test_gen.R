@@ -1,8 +1,8 @@
 # assumes that valid_x have been tested
 
 context("gen")
-test_that("gen_id works as expected", {
-  expect_true(all(valid_id(gen_id(133), require_checksum = TRUE)))
+test_that("gen_pic works as expected", {
+  expect_true(all(valid_pic(gen_pic(133), require_checksum = TRUE)))
 })
 
 test_that("gen_yt works as expected", {

@@ -5,7 +5,7 @@
 \alias{gen_yt}
 \alias{gen_vat}
 \alias{gen_ovt}
-\alias{gen_id}
+\alias{gen_pic}
 \title{Generate valid examples of the strings}
 \usage{
 gen_yt(n = 1)
@@ -14,7 +14,7 @@ gen_vat(n = 1)
 
 gen_ovt(n = 1)
 
-gen_id(n = 1)
+gen_pic(n = 1)
 }
 \arguments{
 \item{n}{The number of examples to be generated. Defaults to 1.}
@@ -26,6 +26,6 @@ Rules for generating the IDs obtained from
  \item{\code{gen_yt}}{generates a Business ID (y-tunnus).}
  \item{\code{gen_vat}}{generates a (Finnish) VAT Number (alv-tunnus).}
  \item{\code{gen_ovt}}{generates a (Finnish) OVT-code (ovt-tunnus).}
- \item{\code{gen_id}}{generates a (Finnish) ID Number (ovt-tunnus).}
+ \item{\code{gen_pic}}{generates a (Finnish) personal identification code (hetu).}
 }
 }

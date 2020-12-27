@@ -3,8 +3,7 @@
 \docType{package}
 \name{fino}
 \alias{fino}
-\alias{fino-package}
 \title{FINO}
 \description{
-FINO
+A package for working with Finnish ID numbers
 }

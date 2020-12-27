@@ -1,5 +1,5 @@
-# map for the checksum in the finnish id number
-id_cs_map <- function(x) {
+# map for the checksum in the finnish personal identification code
+pic_cs_map <- function(x) {
   check_vec <- c(0:9, LETTERS[c(1:6, 8, 10:14, 16, 18:25)])
   check_vec[(as.integer(x) %% 31)+1]
 }
@@ -20,14 +20,12 @@ valid_yt_cs <- function(x) {
   coalesce(check_actual == check, FALSE)
 }
 
-regex_id <- "\\d{6}[A+-]\\d{3}[:alnum:]"
+regex_pic <- "\\d{6}[A+-]\\d{3}[:alnum:]"
 regex_ovt <- "0037\\d{8}\\d{0,5}"
 regex_yt <- "\\d{7}-\\d"
 regex_vat_fi <- "FI\\d{8}"
 regex_vat_all <- function() str_c("(", str_c(vat_regexes$format, collapse = "|"), ")")
 
-
-handle_locate <- function(reg, locate) if (locate) reg else str_c("^", reg, "$")
 
 .onAttach <- function(...) {
   ver <- utils::packageVersion("fino")

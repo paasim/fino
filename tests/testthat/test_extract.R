@@ -1,17 +1,17 @@
 context("valid")
-test_that("extract_id works as expected", {
-  # some randomly generated, verified valid IDs
-  valid_ids <- c("A110124-433233", "aa200953+300Hasd", "A200211A273517")
-  kinda_valid_id <- "A111111-1111"
-  invalid_ids <- c(substr(valid_ids, 1, 6), kinda_valid_id, "200211B2735", "13")
+test_that("extract_pic works as expected", {
+  # some randomly generated, verified valid PICs
+  valid_pics <- c("A110124-433233", "aa200953+300Hasd", "A200211A273517")
+  kinda_valid_pic <- "A111111-1111"
+  invalid_pics <- c(substr(valid_pics, 1, 6), kinda_valid_pic, "200211B2735", "13")
 
-  expect_true(all(!valid_id(valid_ids))) # is not valid without extracting
-  expect_true(all(valid_id(extract_id(valid_ids))))
+  expect_true(all(!valid_pic(valid_pics))) # is not valid without extracting
+  expect_true(all(valid_pic(extract_pic(valid_pics))))
 
-  expect_false(any(valid_id(extract_id(invalid_ids))))
+  expect_false(any(valid_pic(extract_pic(invalid_pics))))
 
-  expect_true(is.na(extract_id(kinda_valid_id, require_checksum = TRUE)))
-  expect_true(!is.na(extract_id(kinda_valid_id, require_checksum = FALSE)))
+  expect_true(is.na(extract_pic(kinda_valid_pic, require_checksum = TRUE)))
+  expect_true(!is.na(extract_pic(kinda_valid_pic, require_checksum = FALSE)))
 })
 
 test_that("extract_yt works as expected", {

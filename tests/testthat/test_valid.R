@@ -1,12 +1,12 @@
 context("valid")
-test_that("valid_id works as expected", {
-  # some randomly generated, verified valid IDs
-  valid_ids <- c("110124-4332", "200953+300H", "200211A2735")
-  kinda_valid_id <- "111111-1111"
-  invalid_ids <- c(substr(valid_ids, 1, 6), kinda_valid_id, "200211B2735", "13")
-  expect_true(all(valid_id(valid_ids)))
-  expect_false(any(valid_id(invalid_ids)))
-  expect_true(valid_id(kinda_valid_id, require_checksum = FALSE))
+test_that("valid_pic works as expected", {
+  # some randomly generated, verified valid PICs
+  valid_pics <- c("110124-4332", "200953+300H", "200211A2735")
+  kinda_valid_pic <- "111111-1111"
+  invalid_pics <- c(substr(valid_pics, 1, 6), kinda_valid_pic, "200211B2735", "13")
+  expect_true(all(valid_pic(valid_pics)))
+  expect_false(any(valid_pic(invalid_pics)))
+  expect_true(valid_pic(kinda_valid_pic, require_checksum = FALSE))
 })
 
 test_that("valid_yt works as expected", {

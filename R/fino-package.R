@@ -1,5 +1,7 @@
 #' FINO
 #'
+#' A package for working with Finnish ID numbers
+#'
 #' @docType package
 #' @name fino
 #'

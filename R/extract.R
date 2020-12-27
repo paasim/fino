@@ -1,7 +1,7 @@
 #' Extract a valid ID Number from a string.
 #'
 #' Functions for extracting a valid Business ID, VAT Number, E-Invoicing
-#' address or an ID Number if it is contained in the input string. Rules
+#' address or a personal identification code (PIC) if it is contained in the input string. Rules
 #' obtained from \url{http://tarkistusmerkit.teppovuori.fi/tarkmerk.htm}.
 #'
 #' @param x The input string(s).
@@ -53,8 +53,8 @@ extract_vat <- function(x, require_checksum = TRUE) {
 
 #' @export
 #' @rdname extract
-extract_id <- function(x, require_checksum = TRUE) {
-  x <- str_extract(x, regex_id)
+extract_pic <- function(x, require_checksum = TRUE) {
+  x <- str_extract(x, regex_pic)
 
   days <- str_c(c("+" = "18", "-" = "19", "A" = "20")[str_sub(x, 7,7)],
                 str_sub(x, 5, 6), str_sub(x, 3, 4), str_sub(x, 1, 2)) %>%
@@ -64,7 +64,7 @@ extract_id <- function(x, require_checksum = TRUE) {
   if (!require_checksum) return(!is.na(days))
 
   check <- str_c(str_sub(x, 1, 6), str_sub(x, 8, 10)) %>%
-    id_cs_map()
+    pic_cs_map()
 
   (!is.na(days) & !is.na(check) & (check == str_sub(x, 11, 11))) %>%
     if_else(x, NA_character_)

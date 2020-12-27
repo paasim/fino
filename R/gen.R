@@ -6,7 +6,7 @@
 #'  \item{\code{gen_yt}}{generates a Business ID (y-tunnus).}
 #'  \item{\code{gen_vat}}{generates a (Finnish) VAT Number (alv-tunnus).}
 #'  \item{\code{gen_ovt}}{generates a (Finnish) OVT-code (ovt-tunnus).}
-#'  \item{\code{gen_id}}{generates a (Finnish) ID Number (ovt-tunnus).}
+#'  \item{\code{gen_pic}}{generates a (Finnish) personal identification code (hetu).}
 #' }
 #'
 #' @param n The number of examples to be generated. Defaults to 1.
@@ -43,7 +43,7 @@ gen_ovt <- function(n = 1) {
 
 #' @export
 #' @rdname gen
-gen_id <- function(n = 1) {
+gen_pic <- function(n = 1) {
   date_seq <- seq(ymd("1850-01-01"), ymd("2017-08-21"), by = "day") %>%
     sample(n, replace = TRUE) %>%
     as.character()
@@ -55,7 +55,7 @@ gen_id <- function(n = 1) {
   nnn <- sample(2:500, n, TRUE) %>% p(3)
 
   t <- str_c(ppkkvv, nnn) %>%
-    id_cs_map()
+    pic_cs_map()
 
   s <- c("18" = "+", "19" = "-" , "20" = "A")
   str_c(ppkkvv, s[str_sub(date_seq, 1, 2)], nnn, t)

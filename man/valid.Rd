@@ -5,7 +5,7 @@
 \alias{valid_yt}
 \alias{valid_ovt}
 \alias{valid_vat}
-\alias{valid_id}
+\alias{valid_pic}
 \title{Check if the string is a valid ID Number}
 \usage{
 valid_yt(x, require_checksum = TRUE)
@@ -14,7 +14,7 @@ valid_ovt(x, require_checksum = TRUE)
 
 valid_vat(x, require_checksum = TRUE)
 
-valid_id(x, require_checksum = TRUE)
+valid_pic(x, require_checksum = TRUE)
 }
 \arguments{
 \item{x}{The input string(s).}
@@ -33,8 +33,8 @@ A logical vector that can be interpreted as follows:
 }
 \description{
 Functions for inferring if the input string is a valid Business ID, VAT
-Number, E-Invoicing address or an ID Number. Rules obtained from
-\url{http://tarkistusmerkit.teppovuori.fi/tarkmerk.htm}. Removes all
-characters that can not occur in a valid string, such commas, dots
-and white space.
+Number, E-Invoicing address or a personal identification code (PIC).
+Rules obtained from \url{http://tarkistusmerkit.teppovuori.fi/tarkmerk.htm}.
+Removes all characters that can not occur in a valid string, such commas,
+dots and white space.
 }

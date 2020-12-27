@@ -1,10 +1,10 @@
 #' Check if the string is a valid ID Number
 #'
 #' Functions for inferring if the input string is a valid Business ID, VAT
-#' Number, E-Invoicing address or an ID Number. Rules obtained from
-#' \url{http://tarkistusmerkit.teppovuori.fi/tarkmerk.htm}. Removes all
-#' characters that can not occur in a valid string, such commas, dots
-#' and white space.
+#' Number, E-Invoicing address or a personal identification code (PIC).
+#' Rules obtained from \url{http://tarkistusmerkit.teppovuori.fi/tarkmerk.htm}.
+#' Removes all characters that can not occur in a valid string, such commas,
+#' dots and white space.
 #'
 #'
 #' @param x The input string(s).
@@ -63,8 +63,8 @@ valid_vat <- function(x, require_checksum = TRUE) {
 
 #' @export
 #' @rdname valid
-valid_id <- function(x, require_checksum = TRUE) {
-  x <- str_extract(x, str_c("^", regex_id, "$"))
+valid_pic <- function(x, require_checksum = TRUE) {
+  x <- str_extract(x, str_c("^", regex_pic, "$"))
 
   days <- str_c(c("+" = "18", "-" = "19", "A" = "20")[str_sub(x, 7,7)],
                 str_sub(x, 5, 6), str_sub(x, 3, 4), str_sub(x, 1, 2)) %>%
@@ -74,7 +74,7 @@ valid_id <- function(x, require_checksum = TRUE) {
   if (!require_checksum) return(!is.na(days))
 
   check <- str_c(str_sub(x, 1, 6), str_sub(x, 8, 10)) %>%
-    id_cs_map()
+    pic_cs_map()
 
   !is.na(days) & !is.na(check) & (check == str_sub(x, 11, 11))
 }
